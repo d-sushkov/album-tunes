@@ -8,10 +8,17 @@
 
 import Foundation
 
+protocol APIManagerDelegate: AnyObject {
+    func didUpdateAlbums()
+    func didUpdateSongs()
+    func didFailWithError()
+}
+
 class APIManager {
     
+    weak var delegate: APIManagerDelegate?
+    
     static let shared = APIManager()
-    let notification = NotificationCenter.default
     
     var albumsSearchResult: [APICallAlbumsResult]?
     var songsResult: [APICallSongsResult]?
@@ -59,8 +66,7 @@ class APIManager {
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data, response, error in
             if error != nil {
-                self.notification.post(name: NSNotification.Name(rawValue: "errorOccured"),
-                                       object: self)
+                self.delegate?.didFailWithError()
                 print("Error retrieving API data: \(error!.localizedDescription)")
             } else {
                 self.updateResults(url: url, data: data)
@@ -85,12 +91,12 @@ class APIManager {
             self.albumsSearchResult = albums?.results.sorted(by: {a, b in
                 return a.collectionName < b.collectionName // sorted alphabetically
             })
-            notification.post(name: NSNotification.Name(rawValue: "albumsUpdated"), object: self)
+            delegate?.didUpdateAlbums()
         } else { // if retrieved songs' data
             var result = self.parseJSON(safeData, isSearching: false) as? SongsResultModel
             result?.results.removeFirst() //first result doesn't contain songs' info
             self.songsResult = result?.results
-            notification.post(name: NSNotification.Name(rawValue: "songsUpdated"), object: self)
+            delegate?.didUpdateSongs()
         }
     }
     
@@ -113,8 +119,7 @@ class APIManager {
                 return decodedData
             }
         } catch {
-            notification.post(name: NSNotification.Name(rawValue: "errorOccured"),
-                              object: self)
+            delegate?.didFailWithError()
             print("Error decoding data: \(error.localizedDescription)")
             return nil
         }

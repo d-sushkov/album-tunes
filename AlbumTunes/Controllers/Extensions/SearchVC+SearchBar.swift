@@ -19,8 +19,6 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchRequest = searchBar.text else {return}
         if searchRequest != "" {
-            apiManager.albumsSearchResult = nil
-            albumCollectionView.reloadData()
             spinner.startAnimating()
             apiManager.fetchAlbumsData(searchRequest: searchRequest)
         } else {

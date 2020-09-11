@@ -41,13 +41,15 @@ extension DetailViewController {
         guard let url = URL(string: urlString) else {return}
         let playerItem: AVPlayerItem = AVPlayerItem(url: url)
         if player.currentItem != nil {
-            player.replaceCurrentItem(with: playerItem)
-        } else {
-            player = AVPlayer(playerItem: playerItem)
-            let playerLayer = AVPlayerLayer(player: player)
-            playerLayer.frame = CGRect(x: 0, y: 0, width: 10, height: 50)
-            self.view.layer.addSublayer(playerLayer)
+            player.pause()
+            // Not using .replaceCurrentItem because
+            // poor network condition causes sound glitching
+            // when changing songs
         }
+        player = AVPlayer(playerItem: playerItem)
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = CGRect(x: 0, y: 0, width: 10, height: 50)
+        self.view.layer.addSublayer(playerLayer)
         player.play()
     }
 }

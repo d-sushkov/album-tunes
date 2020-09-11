@@ -28,17 +28,26 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start with searching " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VD9-XI-oh2">
-                                            <rect key="frame" x="97.5" y="150" width="219.5" height="30"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find Your Music" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VD9-XI-oh2">
+                                            <rect key="frame" x="121.5" y="350" width="171.5" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iTunesLogo" translatesAutoresizingMaskIntoConstraints="NO" id="dS3-jJ-3ra">
+                                            <rect key="frame" x="107" y="100" width="200" height="200"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="200" id="iur-Qb-UqU"/>
+                                                <constraint firstAttribute="width" secondItem="dS3-jJ-3ra" secondAttribute="height" multiplier="1:1" id="msq-EE-mQY"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
-                                        <constraint firstItem="VD9-XI-oh2" firstAttribute="top" secondItem="vZ8-cK-DWo" secondAttribute="top" constant="150" id="gCp-P1-Nao"/>
+                                        <constraint firstItem="dS3-jJ-3ra" firstAttribute="centerX" secondItem="vZ8-cK-DWo" secondAttribute="centerX" id="OjR-ko-gU5"/>
+                                        <constraint firstItem="dS3-jJ-3ra" firstAttribute="top" secondItem="vZ8-cK-DWo" secondAttribute="top" constant="100" id="p8o-2w-aFa"/>
                                         <constraint firstItem="VD9-XI-oh2" firstAttribute="centerX" secondItem="vZ8-cK-DWo" secondAttribute="centerX" id="s1h-UO-yfj"/>
+                                        <constraint firstItem="VD9-XI-oh2" firstAttribute="top" secondItem="dS3-jJ-3ra" secondAttribute="bottom" constant="50" id="ueE-8g-EjL"/>
                                     </constraints>
                                 </view>
                                 <cells/>
@@ -82,7 +91,6 @@
                     <navigationItem key="navigationItem" title="Albums" largeTitleDisplayMode="never" id="7nY-gp-nzH"/>
                     <connections>
                         <outlet property="albumCollectionView" destination="jTz-qH-4eY" id="tkN-9J-Ceb"/>
-                        <outlet property="placeholderLabel" destination="VD9-XI-oh2" id="tBz-l9-Yzp"/>
                         <outlet property="placeholderView" destination="vZ8-cK-DWo" id="lBA-hw-Gci"/>
                         <segue destination="qtR-fg-5Ef" kind="show" identifier="goToDetail" id="KiX-wq-4TB"/>
                     </connections>
@@ -231,4 +239,7 @@
             <point key="canvasLocation" x="137.68115942028987" y="88.392857142857139"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="iTunesLogo" width="512" height="512"/>
+    </resources>
 </document>

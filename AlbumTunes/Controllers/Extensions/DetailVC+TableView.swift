@@ -11,6 +11,10 @@ import UIKit
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if apiManager.songsResult?.count == 0 {
+            songsRetrieved = .no
+            return 1
+        }
         if songsRetrieved == .yes {
             return apiManager.songsResult?.count ?? 1
         }
@@ -21,7 +25,9 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         switch songsRetrieved {
         case .yes:
             // create and return song cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: SongTableViewCell.identifier, for: indexPath) as! SongTableViewCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SongTableViewCell.identifier, for: indexPath) as? SongTableViewCell else {
+                return UITableViewCell()
+            }
             if let songInfo = apiManager.songsResult?[indexPath.row] {
                 cell.configure(with: songInfo)
             }
@@ -29,7 +35,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         case .no:
             // create and return error cell
             let cell = tableView.dequeueReusableCell(withIdentifier: "errorCell", for: indexPath)
-            cell.textLabel?.text = "Unable to load tracklist"
+            cell.textLabel?.text = "Tracklist is unavailable"
             return cell
         case .loading:
             return UITableViewCell()

@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+enum loadingState {
+    case yes, no, loading
+} // YES if got results, NO if failed with error, LOADING if still in process
+
 class DetailViewController: UIViewController {
     
     var player = AVPlayer()
@@ -16,11 +20,7 @@ class DetailViewController: UIViewController {
     
     let apiManager = APIManager.shared
     var selectedAlbum: APICallAlbumsResult?
-    private let spinner = UIActivityIndicatorView(style: .medium)
-    
-    enum loadingState {
-        case yes, no, loading
-    } // YES if got results, NO if failed with error, LOADING if still in process
+    let spinner = UIActivityIndicatorView(style: .medium)
     
     var songsRetrieved = loadingState.loading
     
@@ -34,21 +34,14 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        apiManager.notification.addObserver(self,
-                                            selector: #selector(didUpdateSongs),
-                                            name: NSNotification.Name(rawValue: "songsUpdated"),
-                                            object: nil)
-        apiManager.notification.addObserver(self,
-                                            selector: #selector(didFailWithError),
-                                            name: NSNotification.Name(rawValue: "errorOccured"),
-                                            object: nil)
-        apiManager.notification.addObserver(self,
-                                            selector: #selector(didMinimizeApp),
-                                            name: NSNotification.Name(rawValue: "stopPlaying"),
-                                            object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didMinimizeApp),
+                                               name: NSNotification.Name(rawValue: "stopPlaying"),
+                                               object: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: spinner)
         songsTableView.register(SongTableViewCell.nib(), forCellReuseIdentifier: "songCell")
         updateViewContent()
+        apiManager.delegate = self
     }
     
     /// updateViewContent()
@@ -64,32 +57,7 @@ class DetailViewController: UIViewController {
         albumGenreLabel.text = album.primaryGenreName
         albumCopyrightLabel.text = album.copyright
         
-        apiManager.fetchSongsData(albumID: selectedAlbum!.collectionId)
-    }
-    
-    /// didUpdateSongs()
-    ///
-    /// Checks if song results were retreived,
-    /// and updates UI to show a list of songs
-    @objc private func didUpdateSongs() {
-        songsRetrieved = .yes
-        guard apiManager.songsResult != nil else {return}
-        DispatchQueue.main.async {
-            self.spinner.stopAnimating()
-            self.songsTableView.reloadData()
-        }
-    }
-    
-    /// didFailWithError()
-    ///
-    /// Checks if song results were not retreived,
-    /// and updates UI to show error table view cell
-    @objc private func didFailWithError() {
-        songsRetrieved = .no
-        DispatchQueue.main.async {
-            self.spinner.stopAnimating()
-            self.songsTableView.reloadData()
-        }
+        apiManager.fetchSongsData(albumID: album.collectionId)
     }
     
     /// didMinimizeApp()
