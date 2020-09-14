@@ -43,6 +43,7 @@
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstItem="dS3-jJ-3ra" firstAttribute="centerX" secondItem="vZ8-cK-DWo" secondAttribute="centerX" id="OjR-ko-gU5"/>
                                         <constraint firstItem="dS3-jJ-3ra" firstAttribute="top" secondItem="vZ8-cK-DWo" secondAttribute="top" constant="100" id="p8o-2w-aFa"/>
@@ -70,7 +71,7 @@
                                         <constraint firstItem="8HK-U9-4Ee" firstAttribute="top" secondItem="zmd-SL-WId" secondAttribute="top" id="yUl-53-R0N"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="albumSearchBar" destination="8HK-U9-4Ee" id="LB0-Qc-shF"/>
+                                        <outlet property="albumSearchBar" destination="8HK-U9-4Ee" id="2AC-zz-uO1"/>
                                     </connections>
                                 </collectionReusableView>
                                 <connections>
