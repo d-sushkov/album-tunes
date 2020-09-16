@@ -38,6 +38,10 @@ class DetailViewController: UIViewController {
                                                selector: #selector(didMinimizeApp),
                                                name: NSNotification.Name(rawValue: "stopPlaying"),
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didFinishPlaying),
+                                               name: .AVPlayerItemDidPlayToEndTime,
+                                               object: player.currentItem)
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: spinner)
         songsTableView.register(SongTableViewCell.nib(), forCellReuseIdentifier: "songCell")
         updateViewContent()
@@ -66,8 +70,13 @@ class DetailViewController: UIViewController {
     /// when app enters background
     @objc private func didMinimizeApp() {
         player.pause()
-        guard let currentSong = nowPlaying else {return}
-        apiManager.songsResult?[currentSong.row].isPlaying = false
-        songsTableView.reloadRows(at: [currentSong], with: .none)
+        stopPlayingPreview()
+    }
+    
+    /// didFinishPlaying()
+    ///
+    /// Updates UI when playerItem plays to the end
+    @objc private func didFinishPlaying() {
+        stopPlayingPreview()
     }
 }

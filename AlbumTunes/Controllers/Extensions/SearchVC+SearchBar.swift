@@ -15,6 +15,11 @@ extension SearchViewController: UISearchBarDelegate {
         let searchView: UICollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "searchBar", for: indexPath)
         return searchView
     }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchRequest = searchBar.text else {return}

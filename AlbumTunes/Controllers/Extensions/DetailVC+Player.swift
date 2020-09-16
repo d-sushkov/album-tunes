@@ -52,4 +52,14 @@ extension DetailViewController {
         self.view.layer.addSublayer(playerLayer)
         player.play()
     }
+    
+    /// stopPlayingPreview()
+    ///
+    /// Is called to update "play" icon
+    /// when player stops
+    func stopPlayingPreview() {
+        guard let currentSong = nowPlaying else {return}
+        apiManager.songsResult?[currentSong.row].isPlaying = false
+        songsTableView.reloadRows(at: [currentSong], with: .none)
+    }
 }

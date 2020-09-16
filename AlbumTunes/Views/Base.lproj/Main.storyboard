@@ -56,9 +56,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <searchBar contentMode="redraw" placeholder="Search albums" translatesAutoresizingMaskIntoConstraints="NO" id="8HK-U9-4Ee">
+                                        <searchBar contentMode="redraw" placeholder="Search albums" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8HK-U9-4Ee">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                            <scopeButtonTitles>
+                                                <string>Title</string>
+                                                <string>Title</string>
+                                            </scopeButtonTitles>
                                             <connections>
                                                 <outlet property="delegate" destination="BYZ-38-t0r" id="6Nn-uA-X70"/>
                                             </connections>
